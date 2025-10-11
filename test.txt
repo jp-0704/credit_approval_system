@@ -1,0 +1,189 @@
+curl -X POST http://localhost:8000/ingest-data/ \
+  -F "customer_file=@/home/jp/projects/credit_approval_system/backend/customer_data.xlsx" \
+  -F "loan_file=@/home/jp/projects/credit_approval_system/backend/loan_data.xlsx"
+
+REGISTER
+
+{
+  "first_name": "Rahul",
+  "last_name": "Sharma",
+  "phone_number": "9876543210",
+  "monthly_salary": 75000
+}
+
+{
+  "message": "Customer registered successfully",
+  "customer": {
+    "customer_id": 101,
+    "first_name": "Rahul",
+    "last_name": "Sharma",
+    "phone_number": "9876543210",
+    "monthly_salary": 75000,
+    "approved_limit": 2700000,
+    "current_debt": 0.0
+  }
+}
+
+curl -X POST http://localhost:8000/register/ \
+  -H "Content-Type: application/json" \
+  -d '{"first_name": "Rahul", "last_name": "Sharma", "phone_number": "9876543210", "monthly_salary": 75000}'
+
+CHECK ELIGIBILITY
+
+{
+  "customer_id": 101,
+  "loan_amount": 300000,
+  "interest_rate": 10.5,
+  "tenure": 24
+}
+
+
+
+{
+  "customer_id": 101,
+  "eligible": true,
+  "credit_score": 820,
+  "approval": "Loan approved",
+  "approved_limit": 2700000,
+  "recommended_emi": 13900.24
+}
+
+
+curl -X POST http://localhost:8000/check-eligibility/ \
+  -H "Content-Type: application/json" \
+  -d '{"customer_id": 101, "loan_amount": 300000, "interest_rate": 10.5, "tenure": 24}'
+
+
+
+
+CREATE LOAN
+
+
+{
+  "customer_id": 101,
+  "loan_amount": 100000,
+  "interest_rate": 9.5,
+  "tenure": 12
+}
+
+
+{
+  "message": "Loan created successfully",
+  "loan": {
+    "loan_id": 1753,
+    "customer": 101,
+    "loan_amount": 100000,
+    "tenure": 12,
+    "interest_rate": 9.5,
+    "monthly_repayment": 8790.48,
+    "emis_paid_on_time": 0,
+    "start_date": "2025-10-11",
+    "end_date": "2026-10-11",
+    "fully_paid": false
+  }
+}
+
+
+
+
+curl -X POST http://localhost:8000/create-loan/ \
+  -H "Content-Type: application/json" \
+  -d '{"customer_id": 101, "loan_amount": 100000, "interest_rate": 9.5, "tenure": 12}'
+
+
+
+
+
+VIEW LOAN
+
+
+http://localhost:8000/view-loan/1/
+
+
+
+{
+  "loan_id": 1753,
+  "customer_id": 101,
+  "customer_name": "Rahul Sharma",
+  "loan_amount": 100000,
+  "interest_rate": 9.5,
+  "tenure": 12,
+  "monthly_repayment": 8790.48,
+  "start_date": "2025-10-11",
+  "end_date": "2026-10-11",
+  "fully_paid": false
+}
+
+curl -X GET http://localhost:8000/view-loan/1/
+
+MAKE PAYMENT
+
+{
+  "loan_id": 1753,
+  "amount_paid": 8790.48
+}
+
+
+{
+  "message": "Payment recorded successfully",
+  "loan_status": {
+    "loan_id": 1753,
+    "amount_paid": 8790.48,
+    "remaining_balance": 92109.52,
+    "fully_paid": false
+  }
+}
+
+curl -X POST http://localhost:8000/make-payment/ \
+  -H "Content-Type: application/json" \
+  -d '{"loan_id": 1753, "amount_paid": 8790.48}'
+
+
+
+LOAN HISTORY
+
+http://localhost:8000/loan-history/101/
+
+
+{
+  "customer_id": 101,
+  "customer_name": "Rahul Sharma",
+  "loans": [
+    {
+      "loan_id": 1753,
+      "loan_amount": 100000,
+      "tenure": 12,
+      "interest_rate": 9.5,
+      "monthly_repayment": 8790.48,
+      "start_date": "2025-10-11",
+      "end_date": "2026-10-11",
+      "fully_paid": false
+    },
+    {
+      "loan_id": 1754,
+      "loan_amount": 50000,
+      "tenure": 6,
+      "interest_rate": 10,
+      "monthly_repayment": 8700.55,
+      "start_date": "2025-09-10",
+      "end_date": "2026-03-10",
+      "fully_paid": true
+    }
+  ]
+}
+
+
+
+curl -X GET http://localhost:8000/loan-history/101/
+
+
+
+{
+  "loan_id": 1753,
+  "amount_paid": 8790.48
+}
+
+
+
+localhost:8000 for backend
+localhost:8080 for frontend
