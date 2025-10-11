@@ -1,6 +1,7 @@
 curl -X POST http://localhost:8000/ingest-data/ \
   -F "customer_file=@/home/jp/projects/credit_approval_system/backend/customer_data.xlsx" \
   -F "loan_file=@/home/jp/projects/credit_approval_system/backend/loan_data.xlsx"
+INGEST FILES
 
 REGISTER
 
@@ -187,3 +188,7 @@ curl -X GET http://localhost:8000/loan-history/101/
 
 localhost:8000 for backend
 localhost:8080 for frontend
+
+
+
+

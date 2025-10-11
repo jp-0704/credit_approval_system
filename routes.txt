@@ -1,0 +1,33 @@
+FRONTEND ROUTES
+http://localhost:8080/
+
+
+/                           → Dashboard (shows total customers, loans, approval rate)
+/ingest                     → Upload Excel data (customers + loans)
+/register                   → Register a new customer
+/check-eligibility           → Check if a customer qualifies for a loan
+/create-loan                → Create a new loan for an existing customer
+/view-loan/:loan_id          → View details of a specific loan
+/loan-history/:customer_id   → View all loans belonging to a customer
+/make-payment                → Make a loan repayment
+
+
+
+BACKEND ROUTES
+
+http://localhost:8000/
+
+
+/                             → Root endpoint / health check
+/admin/                       → Django admin panel
+/register/                    → POST → Register new customer
+/check-eligibility/            → POST → Check loan eligibility
+/create-loan/                 → POST → Create a new loan
+/view-loan/<loan_id>/          → GET → View details of specific loan
+/make-payment/                → POST → Make loan repayment
+/loan-history/<customer_id>/   → GET → Fetch all loans for a customer
+/dashboard/metrics             → GET → Summary metrics for dashboard
+/dashboard/timeseries          → GET → Loan trend data
+/dashboard/                    → GET → Dashboard HTML view (for testing)
+/ingest-data/                  → POST → Upload Excel files (customers + loans)
+
