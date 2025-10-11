@@ -31,3 +31,20 @@ http://localhost:8000/
 /dashboard/                    → GET → Dashboard HTML view (for testing)
 /ingest-data/                  → POST → Upload Excel files (customers + loans)
 
+
+DOCKER SERVICES
+
+credit_backend   → Django REST API        → http://localhost:8000
+credit_frontend  → React + Nginx          → http://localhost:8080
+credit_db        → PostgreSQL Database    → localhost:5432
+credit_redis     → Redis (Celery broker)  → localhost:6379
+credit_worker    → Celery Worker          → (internal only)
+credit_nginx     → Reverse Proxy (Frontend + API)
+
+
+NGINX SERVICES
+
+Frontend (React) served at:     http://localhost:8080/
+Backend API proxied at:         http://localhost:8080/api/  ----->  NOT CONFIGURED
+Django API internal URL:        http://backend:8000/
+
